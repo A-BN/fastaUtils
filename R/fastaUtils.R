@@ -5,7 +5,7 @@
 #'
 #'
 #' @param fasta path of the fasta file
-#' @param metrics a vector of metrics to return
+#' @param metrics a character vector of metrics to return in c("N50")
 #' @return number of contigs and contigs sizes, possibly some metrics
 #' @export
 fastaList <-
@@ -50,4 +50,3 @@ fastaList <-
       }
     }
   }
-fastaList(fasta = "Documents/contigs.fasta", metrics = "N50")

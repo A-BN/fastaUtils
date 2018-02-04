@@ -5,13 +5,15 @@
 \title{Lists contigs of a (multi) fasta file and
 counts contig sizes}
 \usage{
-fastaList(fasta)
+fastaList(fasta, metrics = "none")
 }
 \arguments{
 \item{fasta}{path of the fasta file}
+
+\item{metrics}{a character vector of metrics to return in c("N50")}
 }
 \value{
-number of contigs and contigs sizes
+number of contigs and contigs sizes, possibly some metrics
 }
 \description{
 Lists contigs of a (multi) fasta file and
