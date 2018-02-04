@@ -5,19 +5,20 @@
 #'
 #'
 #' @param fasta path of the fasta file
-#' @return number of contigs and contigs sizes
+#' @param metrics a vector of metrics to return
+#' @return number of contigs and contigs sizes, possibly some metrics
 #' @export
 fastaList <-
 # Jacques le fastaList
-  function(fasta) {
+  function(fasta, metrics = "none") {
     fasta <- file(fasta, open = "r")
     on.exit(close(fasta))
-    i_linea <- 0
+    # i_linea <- 0
     n_contigs <- 0
     contig_names <- c()
     contig_sizes <- c()
     while( 1 ) {
-      i_linea <- i_linea + 1
+      #i_linea <- i_linea + 1
       linea <- readLines(fasta, n = 1)
       if( length(linea) == 0) {
         break
@@ -31,5 +32,22 @@ fastaList <-
       } else curr_contig_size <- curr_contig_size + nchar(linea)
     }
     cat("Total number of contigs:", n_contigs)
-    cat(paste("\n",contig_names, "size:", contig_sizes, sep = "\n"))
+    cat(paste("\n",contig_names, "size: ", contig_sizes, sep = ""))
+    cat("\nTotal size = ", sum(contig_sizes))
+    if( "N50" %in% metrics ){
+      N50 <- 0
+      tot_contig_size <- sum(contig_sizes)
+      contig_sizes <- sort(contig_sizes, decreasing = TRUE)
+      cum_size <- 0 
+      for( i in 1:length(contig_sizes) ){
+        curr_size <- contig_sizes[i]
+        cum_size <- cum_size + contig_sizes[i]
+        if( cum_size > tot_contig_size / 2 ){
+          cat("\nN50 = ", curr_size, "\n reached at contig: ", i)
+          
+          break
+        }
+      }
+    }
   }
+fastaList(fasta = "Documents/contigs.fasta", metrics = "N50")
