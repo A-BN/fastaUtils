@@ -5,7 +5,8 @@
 #'
 #'
 #' @param fasta path of the fasta file
-#' @param metrics a character vector of metrics to return in c("N50")
+#' @param metrics a character vector of metrics to return in c("N50") default:
+#'   "none"
 #' @return number of contigs and contigs sizes, possibly some metrics
 #' @export
 fastaList <-
@@ -22,7 +23,7 @@ fastaList <-
       linea <- readLines(fasta, n = 1)
       if( length(linea) == 0) {
         break
-      } 
+      }
       if(stringr::str_detect(string = linea, pattern = ">") ) {
         if( exists("curr_contig_name") ) contig_names <- c(contig_names, curr_contig_name)
         if( exists("curr_contig_size") ) contig_sizes <- c(contig_sizes, curr_contig_size)
@@ -38,13 +39,13 @@ fastaList <-
       N50 <- 0
       tot_contig_size <- sum(contig_sizes)
       contig_sizes <- sort(contig_sizes, decreasing = TRUE)
-      cum_size <- 0 
+      cum_size <- 0
       for( i in 1:length(contig_sizes) ){
         curr_size <- contig_sizes[i]
         cum_size <- cum_size + contig_sizes[i]
         if( cum_size > tot_contig_size / 2 ){
           cat("\nN50 = ", curr_size, "\n reached at contig: ", i)
-          
+
           break
         }
       }

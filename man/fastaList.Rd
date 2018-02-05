@@ -10,7 +10,8 @@ fastaList(fasta, metrics = "none")
 \arguments{
 \item{fasta}{path of the fasta file}
 
-\item{metrics}{a character vector of metrics to return in c("N50")}
+\item{metrics}{a character vector of metrics to return in c("N50") default:
+"none"}
 }
 \value{
 number of contigs and contigs sizes, possibly some metrics
