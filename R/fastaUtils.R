@@ -32,10 +32,11 @@ fastaList <-
         curr_contig_size <- 0
       } else curr_contig_size <- curr_contig_size + nchar(linea)
     }
+    if(0 %in% contig_sizes) contig_sizes <- curr_contig_size
     cat("Total number of contigs:", n_contigs)
     cat(paste("\n",contig_names, "size: ", contig_sizes, sep = ""))
     cat("\nTotal size = ", sum(contig_sizes))
-    if( "N50" %in% metrics ){
+    if("N50" %in% metrics){
       N50 <- 0
       tot_contig_size <- sum(contig_sizes)
       contig_sizes <- sort(contig_sizes, decreasing = TRUE)
