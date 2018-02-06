@@ -41,9 +41,10 @@ fastaList <- function(fasta, metrics = "none", verbose = TRUE){
       curr_contig_size <- 0
     } else curr_contig_size <- curr_contig_size + nchar(linea)
   }
-  cat("Total number of contigs:", n_contigs)
-  cat(paste("\n",contig_names, " size: ", contig_sizes, sep = ""))
-  cat("\nTotal size = ", sum(contig_sizes))
+  if(verbose == TRUE)
+    cat(paste("\n",contig_names, " size: ", contig_sizes, sep = ""))
+  cat("\nTotal number of contigs:", n_contigs)
+  cat("\nTotal size (bp) = ", format(sum(contig_sizes), big.mark = ","))
   #===============================================================================
   # Nx, Lx calculations
   #===============================================================================
@@ -66,7 +67,7 @@ calc_Nx_Lx <- function(contig_sizes, x){
     if( cum_size >= tot_contig_size * (x/100) ){
       Nx_val <- paste0("N",x)
       Lx_val <- paste0("L",x)
-      cat("\n", Nx_val, "=", curr_size, "\n", Lx_val, "=", i)
+      cat("\n", Nx_val, "=", format(curr_size, big.mark = ","), "\n", Lx_val, "=", i)
       break
     }
   }
