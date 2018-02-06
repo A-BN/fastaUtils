@@ -12,6 +12,7 @@
 fastaList <-
 # Jacques le fastaList
   function(fasta, metrics = "none") {
+   #browser()
     fasta <- file(fasta, open = "r")
     on.exit(close(fasta))
     # i_linea <- 0
@@ -21,7 +22,19 @@ fastaList <-
     while( 1 ) {
       #i_linea <- i_linea + 1
       linea <- readLines(fasta, n = 1)
-      if( length(linea) == 0) {
+      if( length(linea) == 0){
+        # Add info about the last contig:
+        if(length(contig_sizes) == 0) {
+          # in case there is only one contig
+          contig_sizes <- curr_contig_size
+          contig_names <- curr_contig_name
+        } else{
+        # in all other cases
+          if( exists("curr_contig_name") ) contig_names <-
+              c(contig_names, curr_contig_name)
+          if( exists("curr_contig_size") ) contig_sizes <-
+              c(contig_sizes, curr_contig_size)
+        }
         break
       }
       if(stringr::str_detect(string = linea, pattern = ">") ) {
@@ -32,7 +45,6 @@ fastaList <-
         curr_contig_size <- 0
       } else curr_contig_size <- curr_contig_size + nchar(linea)
     }
-    if(0 %in% contig_sizes) contig_sizes <- curr_contig_size
     cat("Total number of contigs:", n_contigs)
     cat(paste("\n",contig_names, "size: ", contig_sizes, sep = ""))
     cat("\nTotal size = ", sum(contig_sizes))
