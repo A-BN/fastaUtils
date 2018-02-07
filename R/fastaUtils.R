@@ -50,6 +50,7 @@ fastaList <- function(fasta, metrics = "none", verbose = TRUE){
   #===============================================================================
   if("N50" %in% metrics) calc_Nx_Lx(contig_sizes = contig_sizes, x = 50)
   if("N90" %in% metrics) calc_Nx_Lx(contig_sizes = contig_sizes, x = 90)
+  plot_contigs(contig_sizes = contig_sizes)
 }
 
 #' Calculate assembly statistics
@@ -65,10 +66,26 @@ calc_Nx_Lx <- function(contig_sizes, x){
     curr_size <- contig_sizes[i]
     cum_size <- cum_size + contig_sizes[i]
     if( cum_size >= tot_contig_size * (x/100) ){
-      Nx_val <- paste0("N",x)
-      Lx_val <- paste0("L",x)
-      cat("\n", Nx_val, "=", format(curr_size, big.mark = ","), "\n", Lx_val, "=", i)
+      Nx <- curr_size
+      Lx <- i
+      Nx_display <- paste0("N",x)
+      Lx_display <- paste0("L",x)
+      cat("\n", Nx_display, "=", format(Nx, big.mark = ","), "\n", Lx_display, "=", Lx)
+      return(list(Nx, Lx))
       break
     }
   }
+}
+
+
+plot_contigs <- function(contig_sizes){
+  contig_sizes_df <- data.frame(sizes = sort(contig_sizes, decreasing = TRUE))
+  contig_sizes_df$cumsum <- cumsum(contig_sizes_df$sizes)
+  contig_sizes_df$n <- 1:nrow(contig_sizes_df)
+  my_binwidth <- 0
+  ggplot2::ggplot(data = contig_sizes_df)+
+    ggplot2::geom_line(mapping = ggplot2::aes(x = n, y = cumsum))+
+    ggplot2::scale_x_log10()+
+    #ggplot2::annotation_logticks(base = 10, sides = "b")+
+    ggplot2::theme_bw()
 }
