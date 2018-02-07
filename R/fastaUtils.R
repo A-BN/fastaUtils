@@ -79,6 +79,7 @@ calc_Nx_Lx <- function(contig_sizes, x){
 
 
 plot_contigs <- function(contig_sizes){
+  # add Nx vertial line plot
   contig_sizes_df <- data.frame(sizes = sort(contig_sizes, decreasing = TRUE))
   contig_sizes_df$cumsum <- cumsum(contig_sizes_df$sizes)
   contig_sizes_df$n <- 1:nrow(contig_sizes_df)
@@ -86,6 +87,6 @@ plot_contigs <- function(contig_sizes){
   ggplot2::ggplot(data = contig_sizes_df)+
     ggplot2::geom_line(mapping = ggplot2::aes(x = n, y = cumsum))+
     ggplot2::scale_x_log10()+
-    #ggplot2::annotation_logticks(base = 10, sides = "b")+
+    ggplot2::annotation_logticks(base = 10, sides = "b", scaled = TRUE)+
     ggplot2::theme_bw()
 }
