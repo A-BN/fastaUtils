@@ -18,14 +18,14 @@ fastaList <- function(fasta, metrics = "none", verbose = TRUE){
   contig_sizes <- c()
   while(1){
     linea <- readLines(fasta, n = 1)
+    ### When reaching last line
     if( length(linea) == 0){
-      # Add info about the last contig:
+      # In case there is only one contig
       if(length(contig_sizes) == 0){
-        # in case there is only one contig
         contig_sizes <- curr_contig_size
         contig_names <- curr_contig_name
       } else{
-        # in all other cases
+        # Add info about the last contig:
         if( exists("curr_contig_name") ) contig_names <-
             c(contig_names, curr_contig_name)
         if( exists("curr_contig_size") ) contig_sizes <-
@@ -33,6 +33,7 @@ fastaList <- function(fasta, metrics = "none", verbose = TRUE){
       }
       break
     }
+    ### For each line
     if(stringr::str_detect(string = linea, pattern = ">") ) {
       if( exists("curr_contig_name") ) contig_names <- c(contig_names, curr_contig_name)
       if( exists("curr_contig_size") ) contig_sizes <- c(contig_sizes, curr_contig_size)
