@@ -43,6 +43,6 @@ read_fasta <-
         size = contig_sizes)
     out_df <-
       out_df %>%
-      dplyr::arrange(desc(contig_sizes))
+      dplyr::arrange(dplyr::desc(contig_sizes))
     return(out_df)
   }

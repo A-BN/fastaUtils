@@ -7,10 +7,17 @@
 fastanalize(fasta_file, metrics = TRUE, plot = TRUE, verbose = TRUE)
 }
 \arguments{
+\item{fasta_file}{path of the fasta file}
+
+\item{metrics}{boolean, indicates whether the metrics should be printed}
+
+\item{plot}{boolean, indicates whether a plot should be generated}
+
 \item{verbose}{boolean, indicates whether each contig name and size be
 reported. default: TRUE}
-
-\item{fasta}{path of the fasta file}
+}
+\value{
+Whatever you want
 }
 \description{
 it counts the number of contigs, their size and the total size.

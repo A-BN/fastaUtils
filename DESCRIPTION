@@ -5,10 +5,10 @@ Authors@R: person("Antoine", "Bridier-Nahmias", email = "antoine.bridier-nahmias
 Description: Simple fasta exploration and manipulation
 Depends: R (>= 3.4.3), 
   dplyr,
-  stringr
+  ggplot2,
+  stringr,
+  magrittr
 License: GPL3
 Encoding: UTF-8
 LazyData: true
-Imports:
-  stringr,
 RoxygenNote: 6.0.1
