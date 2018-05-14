@@ -16,6 +16,9 @@ fastanalize <-
     if(verbose){
       print(contigs_df)
     }
+    if(metrics){
+      print(contigs_metrics)
+    }
     if(plot){
       contigs_plot <- plot_contigs(contig_df = contigs_metrics[[1]], contigs_metrics[[2]])
       plot_name <- basename(fasta_file)
