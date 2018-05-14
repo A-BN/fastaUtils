@@ -19,7 +19,7 @@ fastanalize <-
     if(plot){
       contigs_plot <- plot_contigs(contig_df = contigs_metrics[[1]], contigs_metrics[[2]])
       plot_name <- basename(fasta_file)
-      message("saving file ", plot_name)
+      message("saving file ", plot_name, ".jpg")
       ggplot2::ggsave(plot = contigs_plot, filename = paste0("./",plot_name, ".jpg"),device = "jpg")
     }
   }
