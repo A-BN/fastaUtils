@@ -3,7 +3,7 @@
 #' @param fasta path of the fasta file
 #' @return a data.frame with two cols, name & size
 #' @importFrom magrittr %>%
-#' @export
+
 read_fasta <-
   function(fasta){
     fasta_con <- file(fasta, "r")
