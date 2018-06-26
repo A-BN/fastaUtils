@@ -4,12 +4,12 @@
 \alias{fastagrab}
 \title{fastagrab() extracts a fasta sequence from a multi fasta file}
 \usage{
-fastagrab(fasta, name, out_fasta)
+fastagrab(fasta_file, contig_regexp = ".*", min_size = 0)
 }
 \arguments{
-\item{fasta}{path of the fasta file}
+\item{contig_regexp}{regexp of the sequence to extract (with or without '>')}
 
-\item{name}{name of the sequence to extract (with our without '>')}
+\item{fasta}{path of the fasta file}
 
 \item{out_fasta}{name and full path of the file in
 which to write the extracted sequence}

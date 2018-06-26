@@ -1,24 +1,37 @@
 #' fastagrab() extracts a fasta sequence from a multi fasta file
 #' @description description
 #' @param fasta path of the fasta file
-#' @param name name of the sequence to extract (with our without '>')
+#' @param contig_regexp regexp of the sequence to extract (with or without '>')
 #' @param out_fasta name and full path of the file in
 #'   which to write the extracted sequence
 #' @return nothing
 #' @export
 
-fastagrab <- function(fasta, name, out_fasta){
-  # taking care of the '>'
+fastagrab <- function(fasta_file, contig_regexp = ".*", min_size = 0){
   message("Starting fastagrab")
+  # taking care of the '>'
   name <-
-    dplyr::if_else(condition = grepl(x = name, pattern = "^>"),
-                   true = name,
-                   false = stringr::str_replace(string = name,
+    dplyr::if_else(condition = grepl(x = contig_regexp, pattern = "^>"),
+                   true = contig_regexp,
+                   false = stringr::str_replace(string = contig_regexp,
                                                 pattern = "^",
                                                 replacement = ">"))
-  fasta_con <- file(fasta, "r")
-  out_fasta_con <- file(out_fasta, "w")
+  fasta_con <-
+    file(fasta_file, "r")
+  out_fasta <-
+    paste0(stringr::str_remove(string = fasta_file, ".fasta$"),"_filtered.fasta")
+  out_fasta_con <-
+    file(out_fasta, "w")
   on.exit(close(fasta_con))
+  on.exit(close(out_fasta_con))
+
+  contigs_df <-
+    read_fasta(fasta_file)
+  contigs_df <-
+  contigs_df %>%
+    filter(stringr::str_detect(string = name, pattern = contig_regexp)) %>%
+    filter(size >= min_size)
+
   while(1){
     linea <- readLines(fasta_con, n = 1)
     ### When reaching last line
@@ -28,8 +41,8 @@ fastagrab <- function(fasta, name, out_fasta){
       is_header <- grepl(pattern = "^>", x = linea)
       curr_contig <- linea
       if(is_header) curr_name <- linea
-      if(curr_name == name){
-          cat(x = c(linea, "\n"), file = out_fasta_con, append = TRUE)
+      if(curr_name %in% contigs_df$name){
+          cat(x = paste0(linea, "\n"), file = out_fasta_con, append = TRUE)
       }
     }
   }

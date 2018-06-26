@@ -2,5 +2,4 @@
 
 export(fastagrab)
 export(fastanalize)
-export(read_fasta)
 importFrom(magrittr,"%>%")
