@@ -32,6 +32,8 @@ fastagrab <- function(fasta_file, contig_regexp = ".*", min_size = 0){
     filter(stringr::str_detect(string = name, pattern = contig_regexp)) %>%
     filter(size >= min_size)
 
+  print(contigs_df)
+
   while(1){
     linea <- readLines(fasta_con, n = 1)
     ### When reaching last line
