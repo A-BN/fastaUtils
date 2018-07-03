@@ -23,7 +23,7 @@ fastagrab <- function(fasta_file, contig_regexp = ".*", min_size = 0){
   out_fasta_con <-
     file(out_fasta, "w")
   on.exit(close(fasta_con))
-  on.exit(close(out_fasta_con))
+  on.exit(close(out_fasta_con), add = TRUE) # add allows to append "on.exit()" condition
 
   contigs_df <-
     read_fasta(fasta_file)
@@ -31,7 +31,10 @@ fastagrab <- function(fasta_file, contig_regexp = ".*", min_size = 0){
   contigs_df %>%
     filter(stringr::str_detect(string = name, pattern = contig_regexp)) %>%
     filter(size >= min_size)
-
+  if(nrow(contigs_df) == 0){
+    message("No contigs selected!")
+    return()
+  }
   print(contigs_df)
 
   while(1){
@@ -43,7 +46,9 @@ fastagrab <- function(fasta_file, contig_regexp = ".*", min_size = 0){
       is_header <- grepl(pattern = "^>", x = linea)
       curr_contig <- linea
       if(is_header) curr_name <- linea
-      if(curr_name %in% contigs_df$name){
+      is_keeper <-
+        stringr::str_detect(string = contigs_df$name, pattern = curr_name)
+      if(is_keeper){
           cat(x = paste0(linea, "\n"), file = out_fasta_con, append = TRUE)
       }
     }

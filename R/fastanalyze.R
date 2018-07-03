@@ -1,4 +1,4 @@
-#' fastanalize() gives information about a fasta file
+#' fastanalyze() gives information about a fasta file
 #' @description it counts the number of contigs, their size and the total size.
 #'   It also calculates the N50 / L50, the N90 / L90 and prints a synthetic plot
 #'   suming up all these results
@@ -9,7 +9,7 @@
 #'   reported. default: TRUE
 #' @return Whatever you want
 #' @export
-fastanalize <-
+fastanalyze <-
   function(fasta_file, metrics = TRUE, plot = TRUE, verbose = TRUE){
     contigs_df <- read_fasta(fasta = fasta_file)
     contigs_metrics <- nx_lx(contig_df = contigs_df)
