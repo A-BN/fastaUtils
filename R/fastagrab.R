@@ -45,9 +45,12 @@ fastagrab <- function(fasta_file, contig_regexp = ".*", min_size = 0){
     } else {
       is_header <- grepl(pattern = "^>", x = linea)
       curr_contig <- linea
-      if(is_header) curr_name <- linea
-      is_keeper <-
-        stringr::str_detect(string = contigs_df$name, pattern = curr_name)
+      if(is_header){
+        curr_name <- linea
+        is_keeper <-
+          sum(stringr::str_detect(string = contigs_df$name,
+                                  pattern = curr_name)) > 0
+      }
       if(is_keeper){
           cat(x = paste0(linea, "\n"), file = out_fasta_con, append = TRUE)
       }
