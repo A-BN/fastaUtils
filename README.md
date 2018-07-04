@@ -16,8 +16,9 @@ Rscript --slave -e "devtools::install_github('A-BN/fastaUtils')"
 
 You can use it in R console or directly in your terminal like this:
 ``` bash
-Rscript --slave -e "library(fastaUtils; fastaUtils::fastanalyze(fasta = 'path/to/your/file.fasta', 
-                                      metrics = TRUE, 
-                                      plot = TRUE,
-                                      verbose = TRUE)"
+Rscript --slave -e "library(fastaUtils); 
+                    fastaUtils::fastanalyze(fasta = 'path/to/your/file.fasta', 
+                      metrics = TRUE, 
+                      plot = TRUE,
+                      verbose = TRUE)"
 ```
