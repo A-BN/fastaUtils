@@ -25,4 +25,6 @@ fastanalyze <-
       message("saving file ", plot_name, ".jpg")
       ggplot2::ggsave(plot = contigs_plot, filename = paste0("./",plot_name, ".jpg"),device = "jpg")
     }
+    
+    return(contigs_metrics)
 }
