@@ -4,23 +4,26 @@
 \alias{fastanalyze}
 \title{fastanalyze() gives information about a fasta file}
 \usage{
-fastanalyze(fasta_file, metrics = TRUE, plot = TRUE, verbose = TRUE)
+fastanalyze(fasta_file, metrics = TRUE, contigs = TRUE, plot = TRUE,
+  out = "")
 }
 \arguments{
-\item{fasta_file}{path of the fasta file}
+\item{fasta_file}{path of the fasta file to analyze}
 
-\item{metrics}{boolean, indicates whether the metrics should be printed}
+\item{metrics}{boolean, indicates whether the metrics should be returned.
+default: TRUE}
 
-\item{plot}{boolean, indicates whether a plot should be generated}
+\item{contigs}{boolean, indicates whether each contig name and size be
+returned. default: TRUE}
 
-\item{verbose}{boolean, indicates whether each contig name and size be
-reported. default: TRUE}
+\item{plot}{boolean, indicates whether a plot should be generated
+returned. default: TRUE}
 }
 \value{
-Whatever you want
+metrics contigs and plot if requested.
 }
 \description{
-it counts the number of contigs, their size and the total size.
-  It also calculates the N50 / L50, the N90 / L90 and prints a synthetic plot
-  suming up all these results
+It counts the number of contigs, their size and the total size.
+  It also calculates the N50 / L50, the N90 / L90 and can print a synthetic
+  plot suming up all these results nicely.
 }
