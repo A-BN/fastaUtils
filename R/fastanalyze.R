@@ -10,19 +10,25 @@
 #' @return Whatever you want
 #' @export
 fastanalyze <-
-  function(fasta_file, metrics = TRUE, plot = TRUE, verbose = TRUE){
+  function(fasta_file, metrics = FALSE, plot = FALSE, verbose = TRUE){
     contigs_df <- read_fasta(fasta = fasta_file)
     contigs_metrics <- nx_lx(contig_df = contigs_df)
-    if(verbose){
+    if (verbose) {
       print(contigs_df)
+      txtplot::txtplot(x = contigs_metrics[[1]]$contig_n,
+                       y = contigs_metrics[[1]]$cum_size,
+                       width = 100,
+                       height = 30,
+                       pch = "¤")
     }
-    if(metrics){
+    if (metrics) {
       print(contigs_metrics)
     }
-    if(plot){
+    if (plot) {
       contigs_plot <- plot_contigs(contig_df = contigs_metrics[[1]], contigs_metrics[[2]])
       plot_name <- basename(fasta_file)
       message("saving file ", plot_name, ".jpg")
       ggplot2::ggsave(plot = contigs_plot, filename = paste0("./",plot_name, ".jpg"),device = "jpg")
     }
+  return(list(contigs_metrics[[1]], contigs_metrics[[2]]))
 }

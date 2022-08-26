@@ -4,7 +4,7 @@
 \alias{fastanalyze}
 \title{fastanalyze() gives information about a fasta file}
 \usage{
-fastanalyze(fasta_file, metrics = TRUE, plot = TRUE, verbose = TRUE)
+fastanalyze(fasta_file, metrics = TRUE, plot = FALSE, verbose = TRUE)
 }
 \arguments{
 \item{fasta_file}{path of the fasta file}
