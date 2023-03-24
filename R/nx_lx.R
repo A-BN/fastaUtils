@@ -7,13 +7,13 @@ nx_lx <- function(contig_df) {
   contig_df$cum_size <- cumsum(contig_df$size)
   contig_df$contig_n <- 1:nrow(contig_df)
   N50 <-
-    contig_df$size[sum((contig_df$cum_size) <= (tot_contig_size * 0.5)) + 1]
+    contig_df$size[sum((contig_df$cum_size) < (tot_contig_size * 0.5)) + 1]
   L50 <-
-    sum((contig_df$cum_size) <= (tot_contig_size * 0.5)) + 1
+    sum((contig_df$cum_size) < (tot_contig_size * 0.5)) + 1
   N90 <-
-    contig_df$size[sum((contig_df$cum_size) <= (tot_contig_size * 0.9)) + 1]
+    contig_df$size[sum((contig_df$cum_size) < (tot_contig_size * 0.9)) + 1]
   L90 <-
-    sum((contig_df$cum_size) <= (tot_contig_size * 0.9)) + 1
+    sum((contig_df$cum_size) < (tot_contig_size * 0.9)) + 1
   metrics_df <-
     data.frame(x = c(50, 90), n = c(N50, N90), l = c(L50, L90))
   metrics_df$cum_Nx <-
