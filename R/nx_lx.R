@@ -1,8 +1,9 @@
 #' Calculate assembly statistics N50, L50, N90, L90
-#' @param contigs_df, a contigs data.frame with two cols, name and size
+#' @param contig_df, a contigs data.frame with two cols, name and size
 #' @return a data.frame containing N50, L50, N90, L90 and
 #' the input data.frame with cols cum_size and contig_n added
 nx_lx <- function(contig_df) {
+  contig_df = contig_df[order(contig_df$size, decreasing = TRUE), ]
   tot_contig_size <- sum(contig_df$size)
   contig_df$cum_size <- cumsum(contig_df$size)
   contig_df$contig_n <- 1:nrow(contig_df)
